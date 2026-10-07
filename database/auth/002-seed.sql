@@ -1,0 +1,10 @@
+BEGIN;
+
+INSERT INTO roles (rolename)
+VALUES
+  ('CUSTOMER'),
+  ('ADMIN'),
+  ('SHIPMENT_STAFF')
+ON CONFLICT (rolename) DO NOTHING;
+
+COMMIT;

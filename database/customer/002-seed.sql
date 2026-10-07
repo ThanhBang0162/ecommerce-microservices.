@@ -1,0 +1,7 @@
+BEGIN;
+
+INSERT INTO memberships (mname, score)
+VALUES ('STANDARD', 10)
+ON CONFLICT (mname) DO NOTHING;
+
+COMMIT;
