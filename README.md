@@ -419,3 +419,16 @@ tra gửi lại. Dùng mã UUID mới khi muốn tạo một đơn mới.
 - Khách hàng cập nhật vận đơn: HTTP 403.
 - Chuyển vận đơn đã DELIVERED về IN_TRANSIT: HTTP 409.
 - Gửi lại cùng yêu cầu tạo đơn: trả về cùng mã đơn.
+## Minh chứng kiểm tra vận đơn
+
+### Khách hàng không được cập nhật vận đơn
+
+API trả HTTP 403 khi CUSTOMER yêu cầu cập nhật trạng thái vận đơn.
+
+![Khách hàng bị từ chối cập nhật vận đơn](docs/evidence/shipment-customer-403.png)
+
+### Không được chuyển ngược trạng thái đã giao
+
+API trả HTTP 409 khi nhân viên yêu cầu chuyển từ DELIVERED về IN_TRANSIT.
+
+![Từ chối chuyển ngược trạng thái vận đơn](docs/evidence/shipment-transition-409.png)
