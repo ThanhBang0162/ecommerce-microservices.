@@ -432,3 +432,6 @@ API trả HTTP 403 khi CUSTOMER yêu cầu cập nhật trạng thái vận đơ
 API trả HTTP 409 khi nhân viên yêu cầu chuyển từ DELIVERED về IN_TRANSIT.
 
 ![Từ chối chuyển ngược trạng thái vận đơn](docs/evidence/shipment-transition-409.png)
+## Kết quả kiểm thử demo
+
+Xem [bảng kết quả kiểm thử](docs/test-results.md) và các ảnh minh chứng đi kèm.
