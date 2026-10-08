@@ -363,3 +363,59 @@ chưa hủy đơn hàng hoặc hoàn kho.
 - Cảnh báo TimeoutNegativeWarning của KafkaJS trên Node 24 đã xuất hiện;
   các luồng Kafka đã được kiểm tra thành công trong môi trường thực hành.
 - Cấu hình hiện tại dành cho phát triển và demo trên máy cá nhân.
+## Demo API bằng Postman
+
+### Import collection
+
+1. Khởi động hệ thống tại thư mục gốc dự án:
+
+   ```powershell
+   docker compose up -d
+   ```
+
+2. Mở Postman, chọn Import và chọn file:
+
+   ```text
+   postman/ecommerce-microservices.postman_collection.json
+   ```
+
+3. Gửi request `Health toàn hệ thống - 200`.
+   Hệ thống sẵn sàng khi tất cả service trả về `UP`.
+
+### Đăng nhập và sử dụng token
+
+- Gửi `Đăng nhập khách hàng - 200` để tự lưu biến `customerToken`.
+- Gửi `Đăng nhập nhân viên - 200` để tự lưu biến `staffToken`.
+- Request khách hàng dùng Bearer Token: `{{customerToken}}`.
+- Request nhân viên dùng Bearer Token: `{{staffToken}}`.
+- Token có thời hạn 1 giờ. Đăng nhập lại để cập nhật token.
+- Các request phải nằm trong cùng collection để dùng các biến này.
+
+Collection được xuất với giá trị token rỗng; cần đăng nhập trước
+khi chạy các request yêu cầu xác thực.
+
+### Dữ liệu demo hiện tại
+
+Các tài khoản dưới đây được tạo trong quá trình thiết lập demo,
+không tự có trên cơ sở dữ liệu mới:
+
+| Tài khoản | Mật khẩu demo | Quyền |
+|---|---|---|
+| postman_demo_01 | Demo@123456 | CUSTOMER |
+| shipment_demo | Shipment@123456 | SHIPMENT_STAFF |
+
+Các request dùng UID `8`, đơn hàng `5` và vận đơn `5` phụ thuộc
+dữ liệu demo hiện tại. Khi chạy với cơ sở dữ liệu mới, cần tạo
+tài khoản, sản phẩm, đơn hàng và thay các ID tương ứng.
+
+Request `Gửi lại đơn - không tạo trùng` dùng Idempotency-Key cố định
+của đơn đã tạo. Giữ nguyên tài khoản, nội dung và mã này khi kiểm
+tra gửi lại. Dùng mã UUID mới khi muốn tạo một đơn mới.
+
+### Kết quả kiểm tra mong đợi
+
+- Đăng nhập, xác thực, đọc hồ sơ và sản phẩm: HTTP 200.
+- Đăng ký trùng tài khoản: HTTP 409.
+- Khách hàng cập nhật vận đơn: HTTP 403.
+- Chuyển vận đơn đã DELIVERED về IN_TRANSIT: HTTP 409.
+- Gửi lại cùng yêu cầu tạo đơn: trả về cùng mã đơn.
