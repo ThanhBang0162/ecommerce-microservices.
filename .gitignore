@@ -8,3 +8,7 @@ coverage/
 .vscode/
 .DS_Store
 Thumbs.db
+.postman/
+postman/collections/
+postman/globals/
+docs/evidence/*.png.jpg
